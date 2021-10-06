@@ -1,5 +1,7 @@
 while not game:IsLoaded() or not game:GetService("CoreGui") or not game:GetService("Players").LocalPlayer or not game:GetService("Players").LocalPlayer.PlayerGui do wait() end
 
+wait(5)
+
 local fuckbutton = game:GetService("Players").LocalPlayer.PlayerGui.Bingo.Menu.MainMenu.Header.PlayButton
 local bingobutton = game:GetService("Players").Curvn.PlayerGui.Bingo.StaticDisplayArea.Cards.PlayerArea.Cards.Container.SubContainer.Buttons.ClaimButton
 local Bullshit = {"MouseButton1Click", "MouseButton1Down", "Activated"}
