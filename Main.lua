@@ -89,8 +89,8 @@ CoreGui.RobloxGui.TimeServer:TweenPosition(UDim2.new(0.92, 0, 0.91, 0), "In", "Q
 wait(2.5)
 
 spawn(function()
-    for i = 0, 1 do
-        Guis.TimeServer.Text = tostring(1 - i)
+    for i = 0, 90 do
+        Guis.TimeServer.Text = tostring(90 - i)
         wait(60)
     end
     FindNewServer()
