@@ -1,9 +1,18 @@
 while not game:IsLoaded() or not game:GetService("CoreGui") or not game:GetService("Players").LocalPlayer or not game:GetService("Players").LocalPlayer.PlayerGui or not game:GetService("Players").LocalPlayer.PlayerGui.Bingo.Menu.MainMenu.Header.PlayButton do wait() end
-
 wait(2)
 
-local fuckbutton = game:GetService("Players").LocalPlayer.PlayerGui.Bingo.Menu.MainMenu.Header.PlayButton
-local bingobutton = game:GetService("Players").Curvn.PlayerGui.Bingo.StaticDisplayArea.Cards.PlayerArea.Cards.Container.SubContainer.Buttons.ClaimButton
+local Players = game:GetService("Players")
+local LPlayer = Players.LocalPlayer
+local LPG = LPlayer.PlayerGui
+local UserInputService, TweenService, CoreGui = game:GetService("UserInputService"), game:GetService("TweenService"), game:GetService("CoreGui")
+local ChatEvent = game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest
+
+local BingoGui = LPG.Bingo
+local CardsHolder = BingoGui.StaticDisplayArea.Cards.PlayerArea.Cards.Container.SubContainer
+local NumberCallInfo = BingoGui.TopBar.Communicator.Display.BingoCalls.InfoText.CallNo
+
+local fuckbutton = LPG.Bingo.Menu.MainMenu.Header.PlayButton
+local bingobutton = LPG.Bingo.StaticDisplayArea.Cards.PlayerArea.Cards.Container.SubContainer.Buttons.ClaimButton
 local Bullshit = {"MouseButton1Click", "MouseButton1Down", "Activated"}
 
 for i,v in pairs(Bullshit) do
@@ -12,12 +21,33 @@ for i,v in pairs(Bullshit) do
     end
 end
 
-local LPlayer = game:GetService("Players").LocalPlayer
-local LPG = LPlayer.PlayerGui
+local WinnerSayings = { -- CHAT WHEN BINGO, SAYS A RANDOM CHAT WHEN YOU GET A BINGO.
+	"Well that was easy. #BINGO #EZ",
+	"OMG I GOT BINGO! :D",
+	"BINNNNGGOOOO!!!",
+	"HAHA I GOT BINGO! YAY!",
+	"I GOT BINGO CAUSE I'M COOL!",
+	"Imagine not getting bingo lol #EZ #BINGO",
+	"Yayy i got bingo :D"
+}
 
-local BingoGui = LPG.Bingo
-local CardsHolder = BingoGui.StaticDisplayArea.Cards.PlayerArea.Cards.Container.SubContainer
-local NumberCallInfo = BingoGui.TopBar.Communicator.Display.BingoCalls.InfoText.CallNo
+local JokeStartChat = "JOTG: "
+local JokerSayings = { -- JOKE OF THE GAME, TELLS A RANDOM JOKE WHEN THE GAME STARTS.
+	JokeStartChat.. "What type of cloud is so lazy, because it will never get up? Fog!",
+	JokeStartChat.. "Why was the belt sent to jail? For holding up a pair of pants!",
+	JokeStartChat.. "Which bear is the most condescending? A pan-duh!",
+	JokeStartChat.. "Whats 9+10? 21",
+	JokeStartChat.. "What kind of noise does a witch’s vehicle make? Brrrroooom, brrroooom.",
+	JokeStartChat.. "Why are elevator jokes so classic and good? They work on many levels.",
+	JokeStartChat.. "Why do bees have sticky hair? Because they use a honeycomb.",
+	JokeStartChat.. "What’s the most detail-oriented ocean? The Pacific.",
+	JokeStartChat.. "Why is Peter Pan always flying? Because he Neverlands.",
+	JokeStartChat.. "Why did the coach go to the bank? To get his quarterback.",
+	JokeStartChat.. "How do celebrities stay cool? They have many fans.",
+	JokeStartChat.. "Sundays are always a little sad, but the day before is a sadder day.",
+	JokeStartChat.. "5/4 of people admit they’re bad at fractions.",
+	JokeStartChat.. "Dogs can’t operate MRI machines. But catscan."
+}
 
 BingoGui.DisplayArea.Visible = false
 
@@ -25,17 +55,12 @@ NumberCallInfo:GetPropertyChangedSignal("Text"):Connect(function()
     print(NumberCallInfo.Text)
     if NumberCallInfo.Text == "Call 1" then
         print("RESTARTED AUTOMATIC BINGO.")
-        
+        ChatEvent:FireServer(JokerSayings[math.random(1,#JokerSayings)],"All")
         for i,v in pairs(CardsHolder:GetDescendants()) do
             if v.ClassName == "TextLabel" and v.Name == "ToGoText" then
                 v:GetPropertyChangedSignal("Text"):Connect(function()
                     if v.Text == "BINGO!" then
-                        --[[
-                        wait(0.1)
-                        keypress(0x0d)
-                        wait(1)
-                        keyrelease(0x0d)
-                        ]]
+                        ChatEvent:FireServer(WinnerSayings[math.random(1,#WinnerSayings)],"All")
                         for i,v in pairs(Bullshit) do
                             for i,v in pairs(getconnections(bingobutton[v])) do
                                 v:Fire()
@@ -72,8 +97,6 @@ function FindNewServer()
     game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, GUIDs[math.random(1,#GUIDs)].id, LPlayer)
 end
 
-local Players, UserInputService, TweenService, CoreGui = game:GetService("Players"), game:GetService("UserInputService"), game:GetService("TweenService"), game:GetService("CoreGui")
-
 Players.LocalPlayer.Idled:Connect(function()
 	game:GetService("VirtualUser"):Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
 	wait()
@@ -90,9 +113,15 @@ CoreGui.RobloxGui.TimeServer:TweenPosition(UDim2.new(0.92, 0, 0.91, 0), "In", "Q
 wait(2.5)
 
 spawn(function()
-    for i = 0, 90 do
-        Guis.TimeServer.Text = tostring(90 - i)
+    for i = 0, 60 do
+        Guis.TimeServer.Text = tostring(60 - i)
         wait(60)
     end
     FindNewServer()
 end)
+
+repeat wait()
+    if #Players:GetPlayers() < 20 then
+        FindNewServer()
+    end
+until nil
