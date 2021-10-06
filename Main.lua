@@ -1,6 +1,7 @@
 while not game:IsLoaded() or not game:GetService("CoreGui") or not game:GetService("Players").LocalPlayer or not game:GetService("Players").LocalPlayer.PlayerGui do wait() end
 
 local fuckbutton = game:GetService("Players").LocalPlayer.PlayerGui.Bingo.Menu.MainMenu.Header.PlayButton
+local bingobutton = game:GetService("Players").Curvn.PlayerGui.Bingo.StaticDisplayArea.Cards.PlayerArea.Cards.Container.SubContainer.Buttons.ClaimButton
 local Bullshit = {"MouseButton1Click", "MouseButton1Down", "Activated"}
 
 for i,v in pairs(Bullshit) do
@@ -27,10 +28,17 @@ NumberCallInfo:GetPropertyChangedSignal("Text"):Connect(function()
             if v.ClassName == "TextLabel" and v.Name == "ToGoText" then
                 v:GetPropertyChangedSignal("Text"):Connect(function()
                     if v.Text == "BINGO!" then
+                        --[[
                         wait(0.1)
                         keypress(0x0d)
                         wait(1)
                         keyrelease(0x0d)
+                        ]]
+                        for i,v in pairs(Bullshit) do
+                            for i,v in pairs(getconnections(bingobutton[v])) do
+                                v:Fire()
+                            end
+                        end
                         print(v.Text)
                     end
                 end)
