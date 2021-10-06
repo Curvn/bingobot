@@ -79,6 +79,12 @@ end
 
 local Players, UserInputService, TweenService, CoreGui = game:GetService("Players"), game:GetService("UserInputService"), game:GetService("TweenService"), game:GetService("CoreGui")
 
+Players.LocalPlayer.Idled:Connect(function()
+	game:GetService("VirtualUser"):Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+	wait()
+	game:GetService("VirtualUser"):Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+end)
+
 spawn(function() loadstring(game:HttpGet("https://raw.githubusercontent.com/Curvn/bingobot/main/TimeServer.lua"))() end)
 
 wait(1)
