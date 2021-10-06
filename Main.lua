@@ -53,7 +53,6 @@ for i,v in pairs(CardsHolder:GetDescendants()) do
         end)
     end
 end
--- END OF AUTOMATIC BINGO
 
 function FindNewServer()
     if syn.queue_on_teleport then
