@@ -1,6 +1,6 @@
-while not game:IsLoaded() or not game:GetService("CoreGui") or not game:GetService("Players").LocalPlayer or not game:GetService("Players").LocalPlayer.PlayerGui do wait() end
+while not game:IsLoaded() or not game:GetService("CoreGui") or not game:GetService("Players").LocalPlayer or not game:GetService("Players").LocalPlayer.PlayerGui or not game:GetService("Players").LocalPlayer.PlayerGui.Bingo.Menu.MainMenu.Header.PlayButton do wait() end
 
-wait(5)
+wait(2)
 
 local fuckbutton = game:GetService("Players").LocalPlayer.PlayerGui.Bingo.Menu.MainMenu.Header.PlayButton
 local bingobutton = game:GetService("Players").Curvn.PlayerGui.Bingo.StaticDisplayArea.Cards.PlayerArea.Cards.Container.SubContainer.Buttons.ClaimButton
@@ -50,20 +50,6 @@ NumberCallInfo:GetPropertyChangedSignal("Text"):Connect(function()
     end
 end)
 
-for i,v in pairs(CardsHolder:GetDescendants()) do
-    if v.ClassName == "TextLabel" and v.Name == "ToGoText" then
-        v:GetPropertyChangedSignal("Text"):Connect(function()
-            if v.Text == "BINGO!" then
-                wait(0.1)
-                keypress(0x0d)
-                wait(1)
-                keyrelease(0x0d)
-                print(v.Text)
-            end
-        end)
-    end
-end
-
 function FindNewServer()
     if syn.queue_on_teleport then
         syn.queue_on_teleport('game:GetService("ReplicatedFirst"):RemoveDefaultLoadingScreen()')
@@ -104,8 +90,8 @@ CoreGui.RobloxGui.TimeServer:TweenPosition(UDim2.new(0.92, 0, 0.91, 0), "In", "Q
 wait(2.5)
 
 spawn(function()
-    for i = 0, 1 do
-        Guis.TimeServer.Text = tostring(1 - i)
+    for i = 0, 90 do
+        Guis.TimeServer.Text = tostring(90 - i)
         wait(60)
     end
     FindNewServer()
