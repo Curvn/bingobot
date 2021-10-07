@@ -1,5 +1,5 @@
 while not game:IsLoaded() or not game:GetService("CoreGui") or not game:GetService("Players").LocalPlayer or not game:GetService("Players").LocalPlayer.PlayerGui or not game:GetService("Players").LocalPlayer.PlayerGui.Bingo.Menu.MainMenu.Header.PlayButton do wait() end
-wait(2)
+wait(10)
 
 local Players = game:GetService("Players")
 local LPlayer = Players.LocalPlayer
