@@ -1,5 +1,6 @@
 while not game:IsLoaded() or not game:GetService("CoreGui") or not game:GetService("Players").LocalPlayer or not game:GetService("Players").LocalPlayer.PlayerGui or not game:GetService("Players").LocalPlayer.PlayerGui.Bingo.Menu.MainMenu.Header.PlayButton do wait() end
 wait(10)
+print("started")
 
 local Players = game:GetService("Players")
 local LPlayer = Players.LocalPlayer
@@ -18,6 +19,7 @@ local Bullshit = {"MouseButton1Click", "MouseButton1Down", "Activated"}
 for i,v in pairs(Bullshit) do
     for i,v in pairs(getconnections(fuckbutton[v])) do
         v:Fire()
+        print("Pressed Play Button")
     end
 end
 
